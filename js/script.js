@@ -39,12 +39,12 @@ const displayPhone = phones => {
                 <div class="card-body">
                   <h5 class="card-title pt-1">${phone.phone_name}</h5>
                   <h6 class="card-title py-1">${phone.brand}</h6>
-                  <button class="btn btn-primary">Details</button>
+                  <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary">Details</button>
                 </div>
         </div>
         `;
         searchResults.appendChild(div);
-        console.log(phone.slug);
+        // console.log(phone.slug);
     })
 }
 
@@ -63,7 +63,13 @@ const notFound = (dispNotFound) => {
 }
 
 //load second api
-const loadPhoneDetails = () => {
-    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+const loadPhoneDetails = (slugId) => {
+    
+    const url = `https://openapi.programming-hero.com/api/phone/${slugId}`
+    
+    fetch(url)
+    .then(res => res.json())
+    .then(data => console.log(data));
+
 
 }
