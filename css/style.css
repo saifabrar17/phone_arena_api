@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.head-text{
+    background-color: #616161;
+    color: #DCDDDD;
+    font-family: 'Lobster', cursive;
+    letter-spacing: 1px;
+}
