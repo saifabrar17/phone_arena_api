@@ -69,7 +69,114 @@ const loadPhoneDetails = (slugId) => {
     
     fetch(url)
     .then(res => res.json())
-    .then(data => console.log(data));
-
-
+    .then(data => displayPhoneDetail(data.data));
 }
+
+const displayPhoneDetail = phone => {
+    const displayDetail = document.getElementById('phone-details');
+
+    const thumbDiv = document.getElementById('thumbnail');
+    thumbDiv.innerHTML = `
+    <hr>
+    <div class="row">
+    <div class="col-12 text-center">
+      <img src="${phone.image}"  class=" lkoi mx-auto" alt="">
+      <h6>${phone.name}</h6>
+      <h6>${phone.brand}</h6>
+      <p>Release Date: ${phone.releaseDate}</p>
+    </div>
+  </div>
+    `;
+
+    const div = document.createElement('div');
+    div.classList.add('row');
+
+    div.innerHTML = `
+
+        <div class="col-sm-3">
+          <div class="main-feature">
+            <h5 class="d-flex align-items-center justify-content-center text-primary">Main Features</h5>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <table class="table table-bordered ">
+            <tbody>
+              <tr>
+                <th class="w-25">Chipset</th>
+                <td>${phone.mainFeatures.chipSet}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Display Size</th>
+                <td>${phone.mainFeatures.displaySize}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Storage</th>
+                <td>${phone.mainFeatures.storage}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Memory</th>
+                <td>${phone.mainFeatures.memory}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Sensors</th>
+                <td>
+                <ul class="ms-3 mt-3 list-unstyled">
+            ${sensorsData(phone.mainFeatures.sensors)}
+            </ul>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <div class="main-feature">
+            <h5 class="d-flex align-items-center text-primary">Others</h5>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <table class="table table-bordered ">
+            <tbody>
+              <tr>
+                <th class="w-25">WLAN</th>
+                <td> ${phone.others.WLAN}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Bluetooth</th>
+                <td>${phone.others.Bluetooth}</td>
+              </tr>
+              <tr>
+                <th class="w-25">NFC</th>
+                <td>${phone.others.NFC}</td>
+              </tr>
+              <tr>
+                <th class="w-25">USB</th>
+                <td>${phone.others.USB}</td>
+              </tr>
+              <tr>
+                <th class="w-25">GPS</th>
+                <td>${phone.others.GPS}</td>
+              </tr>
+              <tr>
+                <th class="w-25">Radio</th>
+                <td>${phone.others.Radio}</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+    
+    `;
+    displayDetail.appendChild(div);
+    console.log(phone.brand);
+} 
+
+const sensorsData = (sensors) => {
+    let pushData = "";
+    sensors.forEach((sensor) => {
+      pushData += `
+      <li>${sensor}</li>
+      `;
+    });
+    return pushData;
+  };
