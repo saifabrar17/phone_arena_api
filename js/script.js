@@ -78,7 +78,10 @@ const loadPhoneDetails = (slugId) => {
     .then(res => res.json())
     .then(data => displayPhoneDetail(data.data));
 }
+
+
 /*================================================== */
+//display phone details to UI
 const displayPhoneDetail = phone => {
   const displayDetail = document.getElementById('phone-details');
   const release = phone.releaseDate;
@@ -117,13 +120,14 @@ const displayPhoneDetail = phone => {
                 <td>${phone.mainFeatures.displaySize}</td>
               </tr>
               <tr>
-                <th class="w-25">Storage</th>
-                <td>${phone.mainFeatures.storage}</td>
-              </tr>
-              <tr>
                 <th class="w-25">Memory</th>
                 <td>${phone.mainFeatures.memory}</td>
               </tr>
+              <tr>
+                <th class="w-25">Storage</th>
+                <td>${phone.mainFeatures.storage}</td>
+              </tr>
+              
               <tr>
                 <th class="w-25">Sensors</th>
                 <td class="p-0">
@@ -192,6 +196,7 @@ const sensorsData = (sensors) => {
 };
 
 /*================================================== */
+
 //cheching for release date
 const releaseDateChecker = release => {
   if (!release) {
@@ -201,3 +206,4 @@ const releaseDateChecker = release => {
   }
 }
 
+// END
