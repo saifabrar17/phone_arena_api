@@ -40,8 +40,8 @@ const displayPhone = phones => {
                 <div class="card-body">
                   <h5 class="card-title pt-1">${phone.phone_name}</h5>
                   <h6 class="card-title py-1">${phone.brand}</h6>
-                  <button onclick="loadPhoneDetails('${phone.slug}')" href="#thumbnail" class="btn btn-primary">Details</button>
-                </div>
+                  <a href="#thumbnail" onclick="loadPhoneDetails('${phone.slug}')" type="button" class="btn btn-primary">Details</a>
+                  </div>
         </div>
         `;
     searchResults.appendChild(div);
@@ -194,9 +194,9 @@ const sensorsData = (sensors) => {
 /*================================================== */
 //cheching for release date
 const releaseDateChecker = release => {
-  if(!release){
+  if (!release) {
     return '<span class="text-danger">No Release Date Found!</span>'
-  }else{
+  } else {
     return `<span class="text-success">${release}</span>`;
   }
 }
