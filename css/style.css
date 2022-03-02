@@ -21,3 +21,12 @@ html{
 .custom-width{
     width: 20%!important;
 }
+
+@media only screen and (max-width: 576px){
+    .responsive-field{
+        width: 80%!important;
+    }
+    .custom-width{
+        width: 40%!important;
+    }
+}

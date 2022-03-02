@@ -88,8 +88,8 @@ const displayPhoneDetail = phone => {
     <div class="row">
     <div class="col-12 text-center">
       <img src="${phone.image}"  class=" custom-width mx-auto" alt="">
-      <h4 class="pt-3 pb-2">${phone.name}</h4>
-      <h6>Brand: ${phone.brand}</h6>
+      <h4 class="pt-3">${phone.name}</h4>
+      <h6>${phone.brand}</h6>
       <p class="fw-bolder">Release Date: ${releaseDateChecker(release)}</p>
     </div>
   </div>
@@ -172,7 +172,8 @@ const displayPhoneDetail = phone => {
             </tbody>
           </table>
         </div>
-    
+    <br>
+    <br>
     `;
   displayDetail.appendChild(div);
 }
@@ -194,9 +195,9 @@ const sensorsData = (sensors) => {
 //cheching for release date
 const releaseDateChecker = release => {
   if(!release){
-    return 'No Release Date Found!'
+    return '<span class="text-danger">No Release Date Found!</span>'
   }else{
-    return `${release}`;
+    return `<span class="text-success">${release}</span>`;
   }
 }
 
