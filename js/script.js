@@ -84,6 +84,7 @@ const loadPhoneDetails = (slugId) => {
 //display phone details to UI
 const displayPhoneDetail = phone => {
   const displayDetail = document.getElementById('phone-details');
+  displayDetail.textContent = ''; //clearing old content if new detail  button is clicked
   const release = phone.releaseDate;
   const thumbDiv = document.getElementById('thumbnail');
   thumbDiv.innerHTML = `
@@ -98,10 +99,11 @@ const displayPhoneDetail = phone => {
   </div>
     `;
 
-  const div = document.createElement('div');
-  div.classList.add('row');
+  const detailDiv = document.createElement('div');
+  
+  detailDiv.classList.add('row');
 
-  div.innerHTML = `
+  detailDiv.innerHTML = `
 
         <div class="col-sm-3">
           <div class="main-feature">
@@ -179,7 +181,8 @@ const displayPhoneDetail = phone => {
     <br>
     <br>
     `;
-  displayDetail.appendChild(div);
+  displayDetail.appendChild(detailDiv);
+  
 }
 
 /*================================================== */
