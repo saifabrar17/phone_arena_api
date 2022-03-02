@@ -1,101 +1,108 @@
 //getting input value and connecting with API
 const searchPhone = () => {
-    const searchField = document.getElementById('search-field');
-    const showingResultFor = document.getElementById('showing-for');
+  const searchField = document.getElementById('search-field');
+  const showingResultFor = document.getElementById('showing-for');
 
-    const searchText = searchField.value;
-    searchField.value = '';
+  const searchText = searchField.value;
+  searchField.value = '';
 
-    showingResultFor.innerHTML = `
+  showingResultFor.innerHTML = `
     <div class="row">
         <div class="col-12">
           <h5 class="text-center py-3">Showing Results for "${searchText}"</h5>
         </div>
       </div>
     `;
-
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            if (data.data.length === 0) { 
-                notFound(data.data);
-            } else {
-                displayPhone(data.data.slice(0, 20)); //show upto 20 results per search
-            }
-        });
+  //creating url setting link inside url
+  const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+  fetch(url)
+    .then(res => res.json()) //converting to json
+    .then(data => {
+      if (data.data.length === 0) {
+        notFound(data.data); //calling notFound function if search result do not match
+      } else {
+        displayPhone(data.data.slice(0, 20)); //show upto 20 results per search
+      }
+    });
 }
 
+/*================================================== */
 
 //display Phones by searching name
 const displayPhone = phones => {
-    const searchResults = document.getElementById('search-results');
+  const searchResults = document.getElementById('search-results');
 
-    phones.forEach(phone => {
-        const div = document.createElement('div');
-        div.innerHTML = `
+  phones.forEach(phone => {
+    const div = document.createElement('div');
+    div.innerHTML = `
         <div class="card box-shadow w-100 text-center">
                 <img src="${phone.image}" class="card-img-top w-50 pb-2 pt-3 mx-auto" alt="">
                 <div class="card-body">
                   <h5 class="card-title pt-1">${phone.phone_name}</h5>
                   <h6 class="card-title py-1">${phone.brand}</h6>
-                  <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary">Details</button>
+                  <button onclick="loadPhoneDetails('${phone.slug}')" href="#thumbnail" class="btn btn-primary">Details</button>
                 </div>
         </div>
         `;
-        searchResults.appendChild(div);
-        // console.log(phone.slug);
-    })
+    searchResults.appendChild(div);
+
+  })
 }
+
+/*================================================== */
 
 //if search result is not found
 const notFound = (dispNotFound) => {
-    const notFoundPhone = document.getElementById('not-found');
-    const div = document.createElement('div');
-    div.innerHTML = `
+  const notFoundPhone = document.getElementById('not-found');
+  const div = document.createElement('div');
+  div.innerHTML = `
+
     <div class="row">
-    <div class="col-12">
-      <h5 class="text-center text-danger pt-2 pb-3 w-100">No Result Found!</h5>
+      <div class="col-12">
+        <h5 class="text-center text-danger pt-2 pb-3 w-100">No Result Found!</h5>
+      </div>
     </div>
-  </div>
+
         `;
-    notFoundPhone.appendChild(div);
+  notFoundPhone.appendChild(div);
 }
+
+/*================================================== */
 
 //load second api
 const loadPhoneDetails = (slugId) => {
-    
-    const url = `https://openapi.programming-hero.com/api/phone/${slugId}`
-    
-    fetch(url)
+
+  const url = `https://openapi.programming-hero.com/api/phone/${slugId}`
+  //fetching 2nd api
+  fetch(url)
     .then(res => res.json())
     .then(data => displayPhoneDetail(data.data));
 }
-
+/*================================================== */
 const displayPhoneDetail = phone => {
-    const displayDetail = document.getElementById('phone-details');
+  const displayDetail = document.getElementById('phone-details');
+  const release = phone.releaseDate;
+  const thumbDiv = document.getElementById('thumbnail');
+  thumbDiv.innerHTML = `
 
-    const thumbDiv = document.getElementById('thumbnail');
-    thumbDiv.innerHTML = `
-    <hr>
     <div class="row">
     <div class="col-12 text-center">
-      <img src="${phone.image}"  class=" lkoi mx-auto" alt="">
-      <h6>${phone.name}</h6>
-      <h6>${phone.brand}</h6>
-      <p>Release Date: ${phone.releaseDate}</p>
+      <img src="${phone.image}"  class=" custom-width mx-auto" alt="">
+      <h4 class="pt-3 pb-2">${phone.name}</h4>
+      <h6>Brand: ${phone.brand}</h6>
+      <p class="fw-bolder">Release Date: ${releaseDateChecker(release)}</p>
     </div>
   </div>
     `;
 
-    const div = document.createElement('div');
-    div.classList.add('row');
+  const div = document.createElement('div');
+  div.classList.add('row');
 
-    div.innerHTML = `
+  div.innerHTML = `
 
         <div class="col-sm-3">
           <div class="main-feature">
-            <h5 class="d-flex align-items-center justify-content-center text-primary">Main Features</h5>
+            <h5 class="d-flex justify-content-center text-primary">Main Features</h5>
           </div>
         </div>
         <div class="col-sm-9">
@@ -119,9 +126,9 @@ const displayPhoneDetail = phone => {
               </tr>
               <tr>
                 <th class="w-25">Sensors</th>
-                <td>
+                <td class="p-0">
                 <ul class="ms-3 mt-3 list-unstyled">
-            ${sensorsData(phone.mainFeatures.sensors)}
+            ${sensorsData(phone.mainFeatures.sensors)} 
             </ul>
                 </td>
               </tr>
@@ -129,9 +136,9 @@ const displayPhoneDetail = phone => {
             </tbody>
           </table>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 mt-0 pt-0">
           <div class="main-feature">
-            <h5 class="d-flex align-items-center text-primary">Others</h5>
+            <h5 class="d-flex justify-content-center text-primary">Others</h5>
           </div>
         </div>
         <div class="col-sm-9">
@@ -167,16 +174,29 @@ const displayPhoneDetail = phone => {
         </div>
     
     `;
-    displayDetail.appendChild(div);
-    console.log(phone.brand);
-} 
+  displayDetail.appendChild(div);
+}
 
+/*================================================== */
+
+//creating indexed sensor data, displaying as list items
 const sensorsData = (sensors) => {
-    let pushData = "";
-    sensors.forEach((sensor) => {
-      pushData += `
+  let pushData = "";
+  sensors.forEach((sensor) => {
+    pushData += `
       <li>${sensor}</li>
       `;
-    });
-    return pushData;
-  };
+  });
+  return pushData;
+};
+
+/*================================================== */
+//cheching for release date
+const releaseDateChecker = release => {
+  if(!release){
+    return 'No Release Date Found!'
+  }else{
+    return `${release}`;
+  }
+}
+
